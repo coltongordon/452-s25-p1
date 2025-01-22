@@ -33,3 +33,24 @@ list_t *list_add(list_t *list, void *data) {
     list->size++;
     return list;
 }
+
+
+
+void list_destroy(list_t **list) {
+    if (list == NULL || *list == NULL) {
+        return;
+    }
+
+    node_t *current = (*list)->head->next;
+    node_t *next_node;
+
+    while (current != (*list)->head) {
+        next_node = current->next;
+        free(current);
+        current = next_node;
+    }
+
+    free((*list)->head);
+    free(*list);
+    *list = NULL;
+}
