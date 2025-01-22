@@ -12,10 +12,12 @@ extern "C"
 */
 typedef struct node
 {
-void *data;
-struct node *next;
-struct node *prev;
+    void *data;
+    struct node *next;
+    struct node *prev;
 } node_t;
+
+
 /**
 * @brief Struct to represent a list. The list maintains 2 function pointers to
 help
@@ -25,14 +27,13 @@ provided by the
 */
 typedef struct list
 {
-void (*destroy_data)(void *); /*free's any memory that
-data allocated*/
-int (*compare_to)(const void *, const void *); /* returns 0 if data are the
-same*/
-size_t size; /* How many elements are in
-the list */
-struct node *head; /* sentinel node*/
+    void (*destroy_data)(void *); /*free's any memory that data allocated*/
+    int (*compare_to)(const void *, const void *); /* returns 0 if data are the same*/
+    size_t size; /* How many elements are in the list */
+    struct node *head; /* sentinel node*/
 } list_t;
+
+
 /**
 * @brief Create a new list with callbacks that know how to deal with the data
 that
@@ -44,8 +45,9 @@ to
 * @param compare_to Function that will compare two user data elements
 * @return struct list* pointer to the newly allocated list.
 */
-list_t *list_init(void (*destroy_data)(void *),
-int (*compare_to)(const void *, const void *));
+list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, const void *));
+
+
 /**
 * @brief Destroy the list and and all associated data. This functions will
 call
@@ -62,6 +64,8 @@ void list_destroy(list_t **list);
 * @return A pointer to the list
 */
 list_t *list_add(list_t *list, void *data);
+
+
 /**
 * @brief Removes the data at the specified index. If index is invalid
 * then this function does nothing and returns NULL
@@ -71,6 +75,8 @@ list_t *list_add(list_t *list, void *data);
 * @return void* The data that was removed or NULL if nothing was removed
 */
 void *list_remove_index(list_t *list, size_t index);
+
+
 /**
 * @brief Search for any occurrence of data from the list.
 * Internally this function will call compare_to on each item in the list
