@@ -144,56 +144,6 @@ TEST_ASSERT_TRUE(*((int *)curr->data) == i + 1);
 curr = curr->prev;
 }
 }
-void test_invaidIndex(void){
-TEST_ASSERT_TRUE(*((int *)curr->data) == i);
-curr = curr->prev;
-}
-}
-void test_removeIndex3(void)
-{
-populate_list();
-int *rval = (int *)list_remove_index(lst_, 3);
-TEST_ASSERT_TRUE(lst_->size == 4);
-TEST_ASSERT_TRUE(*rval == 1);
-free(rval);
-node_t *curr = lst_->head->next;
-//List should be 4->3->2->0
-for (int i = 3; i >= 1; i--)
-{
-TEST_ASSERT_TRUE(*((int *)curr->data) == i + 1);
-curr = curr->next;
-}
-//Check the last one
-TEST_ASSERT_TRUE(*((int *)curr->data) == 0);
-//Set the curr back one node so we can check prev links
-curr = curr->prev;
-for (int i = 1; i <= 3; i++)
-{
-TEST_ASSERT_TRUE(*((int *)curr->data) == i + 1);
-curr = curr->prev;
-}
-}
-void test_removeIndex4(void)
-{
-populate_list();
-int *rval = (int *)list_remove_index(lst_, 4);
-TEST_ASSERT_TRUE(lst_->size == 4);
-TEST_ASSERT_TRUE(*rval == 0);
-free(rval);
-node_t *curr = lst_->head->next;
-//List should be 4->3->2->1
-for (int i = 3; i >= 0; i--)
-{
-TEST_ASSERT_TRUE(*((int *)curr->data) == i + 1);
-curr = curr->next;
-}
-curr = lst_->head->prev;
-for (int i = 0; i <= 3; i++)
-{
-TEST_ASSERT_TRUE(*((int *)curr->data) == i + 1);
-curr = curr->prev;
-}
-}
 void test_invaidIndex(void)
 {
 populate_list();
