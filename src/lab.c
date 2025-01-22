@@ -1,19 +1,6 @@
-#include <lab.h>
+#include "lab.h"
 
 
-list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, const void *)) {
-    list_t *list = (list_t *)malloc(sizeof(list_t));
-    if (list == NULL) {
-        return NULL;
-    }
-
-    list->head = NULL;
-    list->size = 0;
-    list->destroy_data = destroy_data;
-    list->compare_to = compare_to;
-
-    return list;
-}
 
 
 list_t *list_add(list_t *list, void *data) {
