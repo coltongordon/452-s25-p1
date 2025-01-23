@@ -1,7 +1,7 @@
 #include "lab.h"
 
 
-list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, const void *));
+/*list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, const void *));
 typedef struct node {
     void *data;
     struct node *next;
@@ -13,7 +13,7 @@ typedef struct list {
     size_t size;
     void (*destroy_data)(void *);
     int (*compare_to)(const void *, const void *);
-} list_t;
+} list_t;*/
 
 list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, const void *)) {
     list_t *list = (list_t *)malloc(sizeof(list_t));
