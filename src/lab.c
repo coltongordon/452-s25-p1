@@ -1,7 +1,33 @@
 #include "lab.h"
 
 
+list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, const void *));
+typedef struct node {
+    void *data;
+    struct node *next;
+    struct node *prev;
+} node_t;
 
+typedef struct list {
+    node_t *head;
+    size_t size;
+    void (*destroy_data)(void *);
+    int (*compare_to)(const void *, const void *);
+} list_t;
+
+list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, const void *)) {
+    list_t *list = (list_t *)malloc(sizeof(list_t));
+    if (list == NULL) {
+        return NULL;
+    }
+
+    list->head = NULL;
+    list->size = 0;
+    list->destroy_data = destroy_data;
+    list->compare_to = compare_to;
+
+    return list;
+}
 
 list_t *list_add(list_t *list, void *data) {
     if (list == NULL || data == NULL) {
@@ -55,4 +81,51 @@ void list_destroy(list_t **list) {
     free((*list)->head);
     free(*list);
     *list = NULL;
+}
+
+
+void *list_remove_index(list_t *list, size_t index) {
+    if (list == NULL || list->head == NULL || index >= list->size) {
+        return NULL;
+    }
+
+    node_t *current = list->head->next;
+    size_t current_index = 0;
+
+    while (current != list->head && current_index < index) {
+        current = current->next;
+        current_index++;
+    }
+
+    if (current == list->head) {
+        return NULL;
+    }
+
+    void *data = current->data;
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
+
+    free(current);
+    list->size--;
+
+    return data;
+}
+
+int list_indexof(list_t *list, void *data) {
+    if (list == NULL || data == NULL) {
+        return -1;
+    }
+
+    node_t *current = list->head->next;
+    int index = 0;
+
+    while (current != list->head) {
+        if (current->data == data) {
+            return index;
+        }
+        current = current->next;
+        index++;
+    }
+
+    return -1;
 }
