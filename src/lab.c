@@ -27,11 +27,7 @@ list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, 
     list->compare_to = compare_to;
 
     free(list);
-    free(list->head);
-    free(list->size);
-    free(list->destroy_data);
-    free(list->compare_to);
-
+    
     return list;
 }
 
@@ -65,6 +61,7 @@ list_t *list_add(list_t *list, void *data) {
     list->head->next = new_node;
 
     free(new_node);
+    free(list->head);
     list->size++;
     return list;
 }
