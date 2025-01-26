@@ -81,6 +81,7 @@ void list_destroy(list_t **list) {
         current = next_node;
     }
 
+    free((*list)->head);
     free(*list);
     *list = NULL;
 }
