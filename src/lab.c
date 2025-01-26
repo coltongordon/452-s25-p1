@@ -26,6 +26,8 @@ list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, 
     list->destroy_data = destroy_data;
     list->compare_to = compare_to;
 
+    free(list);
+
     return list;
 }
 
