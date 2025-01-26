@@ -60,8 +60,7 @@ list_t *list_add(list_t *list, void *data) {
     list->head->next->prev = new_node;
     list->head->next = new_node;
 
-    free(new_node);
-    free(list->head);
+
     list->size++;
     return list;
 }
@@ -82,7 +81,6 @@ void list_destroy(list_t **list) {
         current = next_node;
     }
 
-    free((*list)->head);
     free(*list);
     *list = NULL;
 }
