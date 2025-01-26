@@ -98,7 +98,7 @@ void *list_remove_index(list_t *list, size_t index) {
         current_index++;
     }
 
-    if (current == list->head || current_index != index || current == NULL || current->data == NULL) {
+    if (current == list->head) {
         return NULL;
     }
 
