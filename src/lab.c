@@ -66,7 +66,7 @@ list_t *list_add(list_t *list, void *data) {
 
 
 void list_destroy(list_t **list) {
-    if (list == NULL || *list == NULL) {
+    if (list == NULL || *list == NULL || (*list)->head == NULL) {
         return;
     }
 
@@ -98,7 +98,7 @@ void *list_remove_index(list_t *list, size_t index) {
         current_index++;
     }
 
-    if (current == list->head) {
+    if (current == list->head || current_index != index || current == NULL || current->data == NULL) {
         return NULL;
     }
 
