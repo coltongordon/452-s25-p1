@@ -60,6 +60,7 @@ list_t *list_add(list_t *list, void *data) {
     list->head->next->prev = new_node;
     list->head->next = new_node;
 
+    free(new_node);
     list->size++;
     return list;
 }
