@@ -78,6 +78,53 @@ TEST_ASSERT_TRUE(lst_->head->data == NULL);
 TEST_ASSERT_TRUE(*((int *)lst_->head->next->data) == 2);
 TEST_ASSERT_TRUE(*((int *)lst_->head->prev->data) == 1);
 }
+
+void test_add3(void)
+{
+    list_add(lst_, alloc_data(1));
+    TEST_ASSERT_TRUE(lst_->size == 1);
+    list_add(lst_, alloc_data(2));
+    TEST_ASSERT_TRUE(lst_->size == 2);
+    list_add(lst_, alloc_data(3));
+    TEST_ASSERT_TRUE(lst_->size == 3);
+    // With three nodes, next and prev should not be equal
+    TEST_ASSERT_FALSE(lst_->head->next == lst_->head->prev);
+    // Make sure we didn't clobber our sentinel node
+    TEST_ASSERT_FALSE(lst_->head == lst_->head->next);
+    TEST_ASSERT_FALSE(lst_->head == lst_->head->prev);
+    TEST_ASSERT_TRUE(lst_->head->data == NULL);
+    // Check to make sure our next and prev have the correct data
+    TEST_ASSERT_TRUE(*((int *)lst_->head->next->data) == 3);
+    TEST_ASSERT_TRUE(*((int *)lst_->head->prev->data) == 1);
+    // Check the middle node
+    TEST_ASSERT_TRUE(*((int *)lst_->head->next->next->data) == 2);
+}
+
+void test_add4(void)
+{
+    list_add(lst_, alloc_data(1));
+    TEST_ASSERT_TRUE(lst_->size == 1);
+    list_add(lst_, alloc_data(2));
+    TEST_ASSERT_TRUE(lst_->size == 2);
+    list_add(lst_, alloc_data(3));
+    TEST_ASSERT_TRUE(lst_->size == 3);
+    list_add(lst_, alloc_data(4));
+    TEST_ASSERT_TRUE(lst_->size == 4);
+    // With four nodes, next and prev should not be equal
+    TEST_ASSERT_FALSE(lst_->head->next == lst_->head->prev);
+    // Make sure we didn't clobber our sentinel node
+    TEST_ASSERT_FALSE(lst_->head == lst_->head->next);
+    TEST_ASSERT_FALSE(lst_->head == lst_->head->prev);
+    TEST_ASSERT_TRUE(lst_->head->data == NULL);
+    // Check to make sure our next and prev have the correct data
+    TEST_ASSERT_TRUE(*((int *)lst_->head->next->data) == 4);
+    TEST_ASSERT_TRUE(*((int *)lst_->head->prev->data) == 1);
+    // Check the middle nodes
+    TEST_ASSERT_TRUE(*((int *)lst_->head->next->next->data) == 3);
+    TEST_ASSERT_TRUE(*((int *)lst_->head->next->next->next->data) == 2);
+}
+
+
 void test_removeIndex0(void)
 {
 populate_list();
@@ -99,6 +146,51 @@ TEST_ASSERT_TRUE(*((int *)curr->data) == i);
 curr = curr->prev;
 }
 }
+
+void test_removeIndex1(void)
+{
+populate_list();
+int *rval = (int *)list_remove_index(lst_, 1);
+TEST_ASSERT_TRUE(lst_->size == 4);
+TEST_ASSERT_TRUE(*rval == 3);
+free(rval);
+node_t *curr = lst_->head->next;
+//List should be 3->2->1->0
+for (int i = 3; i >= 0; i--)
+{
+TEST_ASSERT_TRUE(*((int *)curr->data) == i);
+curr = curr->next;
+}
+curr = lst_->head->prev;
+for (int i = 0; i <= 3; i++)
+{
+TEST_ASSERT_TRUE(*((int *)curr->data) == i);
+curr = curr->prev;
+}
+}
+
+void test_removeIndex2(void)
+{
+populate_list();
+int *rval = (int *)list_remove_index(lst_, 2);
+TEST_ASSERT_TRUE(lst_->size == 4);
+TEST_ASSERT_TRUE(*rval == 2);
+free(rval);
+node_t *curr = lst_->head->next;
+//List should be 3->2->1->0
+for (int i = 3; i >= 0; i--)
+{
+TEST_ASSERT_TRUE(*((int *)curr->data) == i);
+curr = curr->next;
+}
+curr = lst_->head->prev;
+for (int i = 0; i <= 3; i++)
+{
+TEST_ASSERT_TRUE(*((int *)curr->data) == i);
+curr = curr->prev;
+}
+}
+
 void test_removeIndex3(void)
 {
 populate_list();
@@ -209,7 +301,11 @@ UNITY_BEGIN();
 RUN_TEST(test_create_destroy);
 RUN_TEST(test_add1);
 RUN_TEST(test_add2);
+RUN_TEST(test_add3);
+RUN_TEST(test_add4);
 RUN_TEST(test_removeIndex0);
+RUN_TEST(test_removeIndex1);
+RUN_TEST(test_removeIndex2);
 RUN_TEST(test_removeIndex3);
 RUN_TEST(test_removeIndex4);
 RUN_TEST(test_invaidIndex);
