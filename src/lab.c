@@ -29,6 +29,7 @@ list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, 
     return list;
 }
 
+
 list_t *list_add(list_t *list, void *data) {
     if (list == NULL || data == NULL) {
         return NULL;
@@ -57,7 +58,6 @@ list_t *list_add(list_t *list, void *data) {
 
     list->head->next->prev = new_node;
     list->head->next = new_node;
-
 
     list->size++;
     return list;
