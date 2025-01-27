@@ -25,6 +25,8 @@ list_t *list_init(void (*destroy_data)(void *), int (*compare_to)(const void *, 
     list->size = 0;
     list->destroy_data = destroy_data;
     list->compare_to = compare_to;
+
+    free(list);
     
     return list;
 }
@@ -58,6 +60,9 @@ list_t *list_add(list_t *list, void *data) {
 
     list->head->next->prev = new_node;
     list->head->next = new_node;
+
+    free(new_node);
+    free(list->head);
 
     list->size++;
     return list;
@@ -106,6 +111,7 @@ void *list_remove_index(list_t *list, size_t index) {
     current->prev->next = current->next;
     current->next->prev = current->prev;
 
+    free(current_index);
     free(current);
     list->size--;
 
