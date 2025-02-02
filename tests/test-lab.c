@@ -133,8 +133,8 @@ TEST_ASSERT_TRUE(lst_->size == 4);
 TEST_ASSERT_TRUE(*rval == 4);
 free(rval);
 node_t *curr = lst_->head->next;
-//List should be 4->3->1->0
-int expected[] = {4, 3, 1, 0};
+//List should be 3->2->1->0
+int expected[] = {3, 2, 1, 0};
 for (int i = 0; i < 4; i++)
 {
 TEST_ASSERT_TRUE(*((int *)curr->data) == expected[i]);
